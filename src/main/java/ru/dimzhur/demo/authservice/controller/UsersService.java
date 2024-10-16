@@ -24,15 +24,14 @@ public class UsersService {
      * Срабатывает при получении данных из очереди auth.users
      * @param data данные пользователя
      */
-    @RabbitListener(queues = "auth.users")
+    @RabbitListener(queues = "auth.users.add")
     public void addUser(UserData data) {
         if(data == null){
             return;
         }
-        var userRoles = UserRole.fromStrings(data.getRoles());
         try {
             if (!usersRepository.existsById(data.getId())) {
-                var user = RedisUser.builder().id(data.getId()).roles(userRoles).build();
+                var user = RedisUser.builder().id(data.getId()).roles(data.getRoles()).build();
                 user = usersRepository.save(user);
                 System.out.println("Add user to db " + user.getId());
             }
