@@ -87,7 +87,7 @@ public class TokenValidateService {
 
         var userData = new UserData();
         userData.setId(user.getId());
-        userData.setRoles(user.getRolesNames());
+        userData.setRoles(user.getRoles());
         return userData;
     }
 

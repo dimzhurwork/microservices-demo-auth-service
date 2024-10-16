@@ -2,6 +2,7 @@ package ru.dimzhur.demo.authservice.model.db.redis;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,6 +17,7 @@ import java.util.List;
 /**
  * Модель данных пользователя для хранения в Redis
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
 @RedisHash("Users")
@@ -70,21 +72,10 @@ public class RedisUser extends BaseDocument implements UserDetails  {
         return !blocked && !deleted;
     }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
 
     @Override
     public boolean isEnabled() {
         return !blocked && !deleted;
     }
 
-    public List<String> getRolesNames(){
-        var list = new ArrayList<String>();
-        for(UserRole role : roles){
-            list.add(role.name());
-        }
-        return list;
-    }
 }
