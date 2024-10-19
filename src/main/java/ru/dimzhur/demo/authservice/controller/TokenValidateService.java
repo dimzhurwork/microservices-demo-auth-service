@@ -80,6 +80,21 @@ public class TokenValidateService {
             return null;
         }
 
+        if(!user.isEnabled()){
+            System.out.println("USER DISABLED");
+            return null;
+        }
+
+        if(!user.isAccountNonLocked()){
+            System.out.println("USER LOCKED");
+            return null;
+        }
+
+        if(!user.isAccountNonLocked()){
+            System.out.println("USER LOCKED");
+            return null;
+        }
+
         if (!jwtService.isTokenValid(token, user)) {
             System.out.println("INVALID TOKEN");
             return null;

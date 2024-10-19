@@ -34,12 +34,14 @@ public class UserLoadService {
     public RedisUser getUser(String id) {
         RedisUser user = usersRepository.findById(id).orElse(null);
         if (user == null) {
-            var newUser =getUserRemote(id);
+            var newUser = getUserRemote(id);
             if (newUser != null) {
                 user = usersRepository.save(
                         RedisUser.builder()
                                 .id(newUser.getId())
                                 .roles(newUser.getRoles())
+                                .blocked(newUser.isBlock())
+                                .deleted(newUser.isDeleted())
                                 .build()
                 );
             } else {
